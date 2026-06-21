@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://hm5uqyso7i1b"]
+
+[ext_resource type="Script" uid="uid://brw06f1s871g5" path="res://Scripts/HUD.gd" id="1_jo1ms"]
+[ext_resource type="FontFile" uid="uid://bl48y72oke3s4" path="res://Assets/Fonts/Roboto-Regular.ttf" id="1_sd512"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_jo1ms"]
+font = ExtResource("1_sd512")
+font_size = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_psnte"]
+font = ExtResource("1_sd512")
+font_size = 8
+
+[node name="HUD" type="CanvasLayer" unique_id=1145281534]
+script = ExtResource("1_jo1ms")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=506293582]
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="BoxContainer" type="BoxContainer" parent="MarginContainer" unique_id=1063128406]
+layout_mode = 2
+alignment = 1
+vertical = true
+
+[node name="ScoreLabel" type="Label" parent="MarginContainer/BoxContainer" unique_id=1794567219]
+layout_mode = 2
+text = "Score: 9999"
+label_settings = SubResource("LabelSettings_jo1ms")
+
+[node name="TimeLabel" type="Label" parent="MarginContainer/BoxContainer" unique_id=228318755]
+layout_mode = 2
+text = "Time: 99:99"
+label_settings = SubResource("LabelSettings_psnte")

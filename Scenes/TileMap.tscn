@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://bie7urp2lwsfl"]
+
+[ext_resource type="Texture2D" uid="uid://bsytsjk35wnyq" path="res://Assets/Graphics/terrain.png" id="1_qbaa6"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8cujs"]
+texture = ExtResource("1_qbaa6")
+margins = Vector2i(1, 1)
+separation = Vector2i(2, 0)
+texture_region_size = Vector2i(15, 15)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -7.5, 7.5, -7.5, 7.5, 7.5, -7.5, 7.5)
+0:0/0/custom_data_0 = "Counter"
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -7.5, 7.5, -7.5, 7.5, 7.5, -7.5, 7.5)
+1:0/0/custom_data_0 = "PlateDispenser"
+2:0/0 = 0
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -7.5, 7.5, -7.5, 7.5, 7.5, -7.5, 7.5)
+3:0/0/custom_data_0 = "OnionDispenser"
+5:0/0 = 0
+5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -7.5, 7.5, -7.5, 7.5, 7.5, -7.5, 7.5)
+5:0/0/custom_data_0 = "ServingWindow"
+6:0/0 = 0
+6:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -7.5, 7.5, -7.5, 7.5, 7.5, -7.5, 7.5)
+6:0/0/custom_data_0 = "TomatoDispenser"
+4:0/0 = 0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -7.5, 7.5, -7.5, 7.5, 7.5, -7.5, 7.5)
+4:0/0/custom_data_0 = "Pot"
+
+[sub_resource type="TileSet" id="TileSet_tto40"]
+tile_size = Vector2i(15, 15)
+physics_layer_0/collision_layer = 1
+custom_data_layer_0/name = "stationType"
+custom_data_layer_0/type = 4
+sources/0 = SubResource("TileSetAtlasSource_8cujs")
+
+[node name="Terrain" type="TileMapLayer" unique_id=1592662286]
+tile_set = SubResource("TileSet_tto40")

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Recipe" format=3 uid="uid://uhuqveys5an0"]
+
+[ext_resource type="Script" uid="uid://dyp8hss26mbxe" path="res://Scripts/Resources/IngredientData.gd" id="1_gumj6"]
+[ext_resource type="Resource" uid="uid://cr6q2cx2sg5h0" path="res://Resources/Ingredients/Onion.tres" id="2_77srp"]
+[ext_resource type="Resource" uid="uid://dlxufehqm7c1i" path="res://Resources/Ingredients/Tomato.tres" id="3_77srp"]
+[ext_resource type="Script" uid="uid://w36sptivr4fo" path="res://Scripts/Resources/Recipe.gd" id="3_pr8de"]
+[ext_resource type="Texture2D" uid="uid://c0js5cttoooep" path="res://Assets/Graphics/arrow.png" id="4_khokb"]
+
+[resource]
+script = ExtResource("3_pr8de")
+recipeName = &"Onion Soup with Tomato"
+sprite = ExtResource("4_khokb")
+ingredients = Array[ExtResource("1_gumj6")]([ExtResource("2_77srp"), ExtResource("2_77srp"), ExtResource("3_77srp")])
+baseScore = 7
+metadata/_custom_type_script = "uid://w36sptivr4fo"

@@ -1,0 +1,19 @@
+[gd_scene format=4 uid="uid://dg1f7qr4tv7o"]
+
+[ext_resource type="PackedScene" uid="uid://bie7urp2lwsfl" path="res://Scenes/TileMap.tscn" id="1_gl6un"]
+[ext_resource type="Script" uid="uid://b4samorkypq8y" path="res://Scripts/Game.gd" id="1_j5yw3"]
+[ext_resource type="PackedScene" uid="uid://ps5gpx5sajwg" path="res://Scenes/Player.tscn" id="2_j5yw3"]
+[ext_resource type="PackedScene" uid="uid://hm5uqyso7i1b" path="res://Scenes/HUD.tscn" id="2_kldst"]
+
+[node name="Game" type="Node2D" unique_id=367334329]
+script = ExtResource("1_j5yw3")
+
+[node name="HUD" parent="." unique_id=1145281534 instance=ExtResource("2_kldst")]
+
+[node name="TileMap" parent="." unique_id=1592662286 instance=ExtResource("1_gl6un")]
+tile_map_data = PackedByteArray("AAAHAAMAAAAAAAAAAAAHAAQAAAABAAAAAAAHAAUAAAAAAAAAAAAHAAYAAAADAAAAAAAHAAcAAAAAAAAAAAAHAAgAAAAAAAAAAAAIAAMAAAAAAAAAAAAIAAQAAAACAAAAAAAIAAUAAAACAAAAAAAIAAYAAAACAAAAAAAIAAcAAAACAAAAAAAIAAgAAAAAAAAAAAAJAAMAAAAAAAAAAAAJAAQAAAACAAAAAAAJAAUAAAACAAAAAAAJAAYAAAACAAAAAAAJAAcAAAACAAAAAAAJAAgAAAAAAAAAAAAKAAMAAAAEAAAAAAAKAAQAAAACAAAAAAAKAAUAAAACAAAAAAAKAAYAAAACAAAAAAAKAAcAAAACAAAAAAAKAAgAAAAAAAAAAAALAAMAAAAAAAAAAAALAAQAAAACAAAAAAALAAUAAAACAAAAAAALAAYAAAACAAAAAAALAAcAAAACAAAAAAALAAgAAAAFAAAAAAAMAAMAAAAAAAAAAAAMAAQAAAAAAAAAAAAMAAUAAAAGAAAAAAAMAAYAAAAAAAAAAAAMAAcAAAAAAAAAAAAMAAgAAAAAAAAAAAA=")
+
+[node name="Player" parent="." unique_id=1895437262 instance=ExtResource("2_j5yw3")]
+position = Vector2(150, 90)
+
+[editable path="HUD"]
