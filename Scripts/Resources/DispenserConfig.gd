@@ -1,10 +1,24 @@
-class_name DispenserConfig extends Resource
+class_name DispenserConfig extends StationConfig
 
-@export var ingredientData: IngredientData
+@export var itemData: ItemData
+# TODO: Maybe change this to something that supports inspector labels?
+# Example: {"quality": 1.0, "weight": 1.0}
 @export var qualityDistribution: Array[Vector2] = [Vector2(1.0, 1.0)]
 
 
-func rollQuality() -> float:
+func dispense() -> Item:
+	# Alternative to hardcoding every possibility?
+	# Works fine for now, but not scalable.
+	var item: Item = null
+	if itemData is IngredientData:
+		item = Ingredient.new(itemData, __rollQuality())
+	# Assume Plate if not an Ingredient. Can add more options if needed.
+	else:
+		item = Plate.new()
+	return item
+
+
+func __rollQuality() -> float:
 	if qualityDistribution.is_empty():
 		return 1.0
 		

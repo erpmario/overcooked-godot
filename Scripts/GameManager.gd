@@ -1,4 +1,4 @@
-extends Node2D
+class_name GameManager extends Node2D
 
 signal gameOver
 
@@ -10,6 +10,7 @@ signal gameOver
 @onready var orderManager: OrderManager = $OrderManager
 @onready var player: Player = $Player
 @onready var tileMap: TileMapLayer = $TileMap
+@onready var stationSpawners: Node = get_node_or_null("StationSpawners")
 
 # The master grid mapping coordinates to tile objects
 var interactableGrid: Dictionary[Vector2i, InteractableTile] = {}
@@ -26,10 +27,16 @@ var isGameOver: bool = false
 func _ready() -> void:
 	# Listen to the player's interaction requests.
 	player.interactionRequested.connect(_on_player_interactionRequested)
-	
+
 	# Let the player listen for the game over signal.
 	gameOver.connect(player._on_gameOver)
-	
+
+	# Wire the OrderManager to the HUD (Game owns the connection between its children).
+	orderManager.ordersUpdated.connect(_on_orderManager_ordersUpdated)
+
+	# Now safe to initialize the OrderManager; signal is connected.
+	orderManager.setupQueues()
+
 	# Build internal grid based on the tilemap.
 	__initializeGrid()
 	
@@ -57,32 +64,56 @@ func _process(delta: float) -> void:
 	
 	
 func __initializeGrid() -> void:
+	# Build a lookup map of tile cell -> StationSpawner for config-driven stations.
+	var spawnerMap: Dictionary[Vector2i, StationSpawner] = {}
+	if has_node("StationSpawners"):
+		for child in $StationSpawners.get_children():
+			if child is StationSpawner:
+				var cell: Vector2i = tileMap.local_to_map(child.position)
+				spawnerMap[cell] = child
+
 	var usedCells: Array[Vector2i] = tileMap.get_used_cells()
 	for cell in usedCells:
 		var tileData: TileData = tileMap.get_cell_tile_data(cell)
 		if tileData:
 			var stationType: String = tileData.get_custom_data(Globals.Stations.STATION_TYPE)
 			if stationType:
-				__createStation(stationType, cell)
-				
+				# Pass the spawner's config if one was placed on this tile.
+				var config: Resource = null
+				if spawnerMap.has(cell):
+					config = spawnerMap[cell].config
+				__createStation(stationType, cell, config)
 
-func __createStation(stationType: StringName, coords: Vector2i) -> void:
+
+func __createStation(stationType: StringName, coords: Vector2i, config: Resource = null) -> void:
 	var newTile: InteractableTile = null
-	
+
 	match stationType:
 		Globals.Stations.COUNTER:
 			newTile = Counter.new()
 		Globals.Stations.POT:
-			newTile = Pot.new()
+			if config and config is PotConfig:
+				newTile = Pot.new(config)
+			else:
+				push_warning("No PotConfig found for Pot at cell ", coords)
 		Globals.Stations.SERVING_WINDOW:
 			newTile = ServingWindow.new()
 			newTile.soupServed.connect(_on_servingWindow_soupServed)
 		Globals.Stations.PLATE_DISPENSER:
-			newTile = Dispenser.new(Globals.Items.PLATE)
+			if config and config is DispenserConfig:
+				newTile = Dispenser.new(config)
+			else:
+				push_warning("No DispenserConfig found for PlateDispenser at cell ", coords)
 		Globals.Stations.ONION_DISPENSER:
-			newTile = Dispenser.new(Globals.Items.ONION)
+			if config and config is DispenserConfig:
+				newTile = Dispenser.new(config)
+			else:
+				push_warning("No DispenserConfig found for OnionDispenser at cell ", coords)
 		Globals.Stations.TOMATO_DISPENSER:
-			newTile = Dispenser.new(Globals.Items.TOMATO)
+			if config and config is DispenserConfig:
+				newTile = Dispenser.new(config)
+			else:
+				push_warning("No DispenserConfig found for TomatoDispenser at cell ", coords)
 		_:
 			print("Invalid station type: ", stationType)
 			
@@ -101,10 +132,15 @@ func _on_player_interactionRequested(targetPosition: Vector2) -> void:
 	var gridCoords: Vector2i = tileMap.local_to_map(targetPosition)
 	if interactableGrid.has(gridCoords):
 		interactableGrid[gridCoords].interact(player)
-	
-	
+
+
+func _on_orderManager_ordersUpdated(active: Array[Recipe], queue: Array[Recipe]) -> void:
+	print("Game script received signal")
+	hud.updateOrders(active, queue)
+
+
 func _on_servingWindow_soupServed(soup: Soup) -> void:
-	var points = soup.score()
+	var points = orderManager.evaluateServedSoup(soup)
 	score += points
 	hud.updateScore(score)
 	print("Total score: ", score)

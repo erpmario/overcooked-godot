@@ -1,17 +1,17 @@
 class_name Pot extends InteractableTile
 
+var __config: PotConfig
 var __soup: Soup = null
 var __isCooked: bool = false
 var __isCooking: bool = false
-var __capacity: int
-var __cookTimeRequired: float
+#var __capacity: int
+#var __cookTimeRequired: float
 var __cookTimeElapsed: float = 0.0
 
 
 
-func _init(capacity: int = 3, cookTime: float = 5.0) -> void:
-	__capacity = capacity if capacity >= 1 else 1
-	__cookTimeRequired = cookTime if cookTime >= 0.0 else 0.0
+func _init(config: PotConfig) -> void:
+	__config = config
 
 
 func soup() -> Soup:
@@ -27,7 +27,7 @@ func isCooking() -> bool:
 	
 	
 func cookingProgress() -> float:
-	return __cookTimeElapsed / __cookTimeRequired if __cookTimeRequired > 0.0 else 1.0
+	return __cookTimeElapsed / __config.cookTimeRequired if __config.cookTimeRequired > 0.0 else 1.0
 
 
 func interact(player: Player) -> void:
@@ -57,7 +57,7 @@ func interact(player: Player) -> void:
 		if not __isCooked:
 			if not __soup:
 				__soup = Soup.new()
-			if __soup.numIngredients() < __capacity:
+			if __soup.numIngredients() < __config.capacity:
 				__soup.addIngredient(playerItem)
 				print("Added ", playerItem.type(), " to pot.")
 				player.dropItem()
@@ -68,12 +68,12 @@ func interact(player: Player) -> void:
 	# Fall back on attempting to cook the soup.
 	else:
 		__cookSoup()
-				
+		
 
 func tick(delta: float) -> void:
 	if __isCooking:
 		__cookTimeElapsed += delta
-		if __cookTimeElapsed >= __cookTimeRequired:
+		if __cookTimeElapsed >= __config.cookTimeRequired:
 			__isCooking = false
 			__isCooked = true
 			__cookTimeElapsed = 0.0
@@ -90,4 +90,3 @@ func __cookSoup() -> void:
 
 func __canCookSoup() -> bool:
 	return not __isCooked and __soup and __soup.numIngredients() > 0
-		

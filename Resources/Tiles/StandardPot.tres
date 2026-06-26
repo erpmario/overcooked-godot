@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="PotConfig" format=3 uid="uid://bl7vvj1md06ry"]
+
+[ext_resource type="Script" uid="uid://j4gijb6ra6mf" path="res://Scripts/Resources/PotConfig.gd" id="1_pg3b2"]
+
+[resource]
+script = ExtResource("1_pg3b2")
+metadata/_custom_type_script = "uid://j4gijb6ra6mf"

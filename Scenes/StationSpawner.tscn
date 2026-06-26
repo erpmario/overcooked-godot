@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://3w3krjbbv7xk"]
+
+[ext_resource type="Script" uid="uid://de0gea648vaj6" path="res://Scripts/Tiles/StationSpawner.gd" id="1_yriac"]
+
+[node name="StationSpawner" type="Node2D" unique_id=349557308]
+script = ExtResource("1_yriac")

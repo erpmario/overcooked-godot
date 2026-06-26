@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://bnftuenksqxi"]
 
-[ext_resource type="Script" uid="uid://b4samorkypq8y" path="res://Scripts/Game.gd" id="1_n8mlj"]
+[ext_resource type="Script" uid="uid://b4samorkypq8y" path="res://Scripts/GameManager.gd" id="1_n8mlj"]
 [ext_resource type="PackedScene" uid="uid://bie7urp2lwsfl" path="res://Scenes/TileMap.tscn" id="2_jqop6"]
 [ext_resource type="PackedScene" uid="uid://hm5uqyso7i1b" path="res://Scenes/HUD.tscn" id="2_x6o5k"]
 [ext_resource type="PackedScene" uid="uid://ps5gpx5sajwg" path="res://Scenes/Player.tscn" id="3_x6o5k"]
@@ -15,6 +15,11 @@
 [ext_resource type="Resource" uid="uid://c7na8a7cxc2k8" path="res://Resources/Recipes/TomatoSoupSmall.tres" id="13_km3yx"]
 [ext_resource type="Resource" uid="uid://ducbrsonmk0hj" path="res://Resources/Recipes/TomatoSoupWithOnion.tres" id="14_qlrib"]
 [ext_resource type="Resource" uid="uid://c2kp41ubbs6uc" path="res://Resources/Recipes/VegetableSoup.tres" id="15_c3c7d"]
+[ext_resource type="PackedScene" uid="uid://3w3krjbbv7xk" path="res://Scenes/StationSpawner.tscn" id="16_alh3a"]
+[ext_resource type="Resource" uid="uid://bl7vvj1md06ry" path="res://Resources/Tiles/StandardPot.tres" id="17_4q8tf"]
+[ext_resource type="Resource" uid="uid://bfispa34ty14u" path="res://Resources/Tiles/PlateDispenser.tres" id="18_yd7f3"]
+[ext_resource type="Resource" uid="uid://dp8ujnrsh4brq" path="res://Resources/Tiles/OnionDispenser.tres" id="19_xk4g2"]
+[ext_resource type="Resource" uid="uid://bct84pfaojtml" path="res://Resources/Tiles/TomatoDispenser.tres" id="20_zp9h1"]
 
 [node name="Showroom" type="Node2D" unique_id=362820415]
 script = ExtResource("1_n8mlj")
@@ -32,3 +37,67 @@ position = Vector2(150, 75)
 script = ExtResource("5_x6o5k")
 possibleRecipes = Array[ExtResource("6_lk3ud")]([ExtResource("7_x788j"), ExtResource("8_vc12p"), ExtResource("9_skqty"), ExtResource("10_g8iw8"), ExtResource("11_rqt7o"), ExtResource("12_oyh77"), ExtResource("13_km3yx"), ExtResource("14_qlrib"), ExtResource("15_c3c7d")])
 metadata/_custom_type_script = "uid://bro36xseucy5"
+
+[node name="StationSpawners" type="Node" parent="." unique_id=1496445039]
+
+[node name="Pot06" parent="StationSpawners" unique_id=349557300 instance=ExtResource("16_alh3a")]
+position = Vector2(97.5, 52.5)
+config = ExtResource("17_4q8tf")
+
+[node name="Pot07" parent="StationSpawners" unique_id=349557301 instance=ExtResource("16_alh3a")]
+position = Vector2(112.5, 52.5)
+config = ExtResource("17_4q8tf")
+
+[node name="Pot08" parent="StationSpawners" unique_id=349557302 instance=ExtResource("16_alh3a")]
+position = Vector2(127.5, 52.5)
+config = ExtResource("17_4q8tf")
+
+[node name="Pot09" parent="StationSpawners" unique_id=349557303 instance=ExtResource("16_alh3a")]
+position = Vector2(142.5, 52.5)
+config = ExtResource("17_4q8tf")
+
+[node name="Pot10" parent="StationSpawners" unique_id=349557304 instance=ExtResource("16_alh3a")]
+position = Vector2(157.5, 52.5)
+config = ExtResource("17_4q8tf")
+
+[node name="Pot11" parent="StationSpawners" unique_id=349557305 instance=ExtResource("16_alh3a")]
+position = Vector2(172.5, 52.5)
+config = ExtResource("17_4q8tf")
+
+[node name="Pot12" parent="StationSpawners" unique_id=349557306 instance=ExtResource("16_alh3a")]
+position = Vector2(187.5, 52.5)
+config = ExtResource("17_4q8tf")
+
+[node name="Pot13" parent="StationSpawners" unique_id=349557307 instance=ExtResource("16_alh3a")]
+position = Vector2(202.5, 52.5)
+config = ExtResource("17_4q8tf")
+
+[node name="Pot14" parent="StationSpawners" unique_id=349557308 instance=ExtResource("16_alh3a")]
+position = Vector2(217.5, 52.5)
+config = ExtResource("17_4q8tf")
+
+[node name="PlateDispenser05" parent="StationSpawners" unique_id=149557301 instance=ExtResource("16_alh3a")]
+position = Vector2(82.5, 82.5)
+config = ExtResource("18_yd7f3")
+
+[node name="PlateDispenser15" parent="StationSpawners" unique_id=149557302 instance=ExtResource("16_alh3a")]
+position = Vector2(232.5, 82.5)
+config = ExtResource("18_yd7f3")
+
+[node name="OnionDispenser05" parent="StationSpawners" unique_id=159557301 instance=ExtResource("16_alh3a")]
+position = Vector2(82.5, 97.5)
+config = ExtResource("19_xk4g2")
+
+[node name="OnionDispenser15" parent="StationSpawners" unique_id=159557302 instance=ExtResource("16_alh3a")]
+position = Vector2(232.5, 97.5)
+config = ExtResource("19_xk4g2")
+
+[node name="TomatoDispenser05" parent="StationSpawners" unique_id=169557301 instance=ExtResource("16_alh3a")]
+position = Vector2(82.5, 112.5)
+config = ExtResource("20_zp9h1")
+
+[node name="TomatoDispenser15" parent="StationSpawners" unique_id=169557302 instance=ExtResource("16_alh3a")]
+position = Vector2(232.5, 112.5)
+config = ExtResource("20_zp9h1")
+
+[editable path="HUD"]

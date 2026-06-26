@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="DispenserConfig" format=3 uid="uid://bct84pfaojtml"]
+
+[ext_resource type="Resource" uid="uid://dlxufehqm7c1i" path="res://Resources/Items/Tomato.tres" id="1_s51ar"]
+[ext_resource type="Script" uid="uid://bxeml2hehifrn" path="res://Scripts/Resources/DispenserConfig.gd" id="2_g0hcn"]
+
+[resource]
+script = ExtResource("2_g0hcn")
+itemData = ExtResource("1_s51ar")
+metadata/_custom_type_script = "uid://bxeml2hehifrn"

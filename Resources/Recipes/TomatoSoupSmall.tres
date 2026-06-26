@@ -1,14 +1,14 @@
 [gd_resource type="Resource" script_class="Recipe" format=3 uid="uid://c7na8a7cxc2k8"]
 
 [ext_resource type="Script" uid="uid://dyp8hss26mbxe" path="res://Scripts/Resources/IngredientData.gd" id="1_ptskc"]
-[ext_resource type="Resource" uid="uid://dlxufehqm7c1i" path="res://Resources/Ingredients/Tomato.tres" id="2_ptskc"]
+[ext_resource type="Resource" uid="uid://dlxufehqm7c1i" path="res://Resources/Items/Tomato.tres" id="2_ptskc"]
 [ext_resource type="Script" uid="uid://w36sptivr4fo" path="res://Scripts/Resources/Recipe.gd" id="3_2p2j8"]
-[ext_resource type="Texture2D" uid="uid://c0js5cttoooep" path="res://Assets/Graphics/arrow.png" id="4_aa7ob"]
+[ext_resource type="Texture2D" uid="uid://cjc5if5ksadbr" path="res://Assets/Graphics/Soups/TomatoSoupSmall.tres" id="4_ptskc"]
 
 [resource]
 script = ExtResource("3_2p2j8")
 recipeName = &"Small Tomato Soup"
-sprite = ExtResource("4_aa7ob")
+sprite = ExtResource("4_ptskc")
 ingredients = Array[ExtResource("1_ptskc")]([ExtResource("2_ptskc")])
 baseScore = 3
 metadata/_custom_type_script = "uid://w36sptivr4fo"

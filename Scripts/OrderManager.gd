@@ -21,8 +21,8 @@ var orderQueue: Array[Recipe] = []
 signal ordersUpdated(active: Array[Recipe], queue: Array[Recipe])
 
 
-func _ready() -> void:
-	# Populate the initial queue and active orders when the game starts
+# Called by the Game script after it has connected all signals.
+func setupQueues() -> void:
 	__fillQueues()
 
 
@@ -44,11 +44,11 @@ func __getRandomRecipe() -> Recipe:
 		return null
 		
 	# Weighted random selection algorithm
-	var totaWeight: float = 0.0
+	var totalWeight: float = 0.0
 	for recipe in possibleRecipes:
-		totaWeight += recipe.spawnWeight
+		totalWeight += recipe.spawnWeight
 		
-	var randomVal = randf() * totaWeight
+	var randomVal = randf() * totalWeight
 	var currentWeight: float = 0.0
 	
 	for recipe in possibleRecipes:
@@ -76,8 +76,8 @@ func evaluateServedSoup(servedSoup: Soup) -> int:
 	
 	# 2. Calculate score and manage arrays based on match
 	if matchedRecipe:
+		# It was an active order!
 		if matchedRecipe in activeOrders:
-			# It was an active order!
 			finalScore = int(matchedRecipe.baseScore * orderedMultiplier * qualityMultiplier)
 			
 			# Remove the fulfilled order and shift the next one from the queue
@@ -86,13 +86,13 @@ func evaluateServedSoup(servedSoup: Soup) -> int:
 				activeOrders.append(orderQueue.pop_front())
 				
 			print("Order fulfilled! Base: ", matchedRecipe.baseScore, " Quality x", qualityMultiplier, " Active Order x", orderedMultiplier, " Total: +", finalScore)
+		# It was a valid recipe, but not an active one.
 		else:
-			# It was a valid recipe, but not an active one.
 			finalScore = int(matchedRecipe.baseScore * nonOrderedMultiplier * qualityMultiplier)
 			
 			print("Served a non-ordered soup. Base: ", matchedRecipe.baseScore, " Quality x", qualityMultiplier, " Non-ordered Soup x", nonOrderedMultiplier, " Total: +", finalScore)
+	# Not a match to any possible recipe.
 	else:
-		# Not a match to any possible recipe.
 		finalScore = int(fallbackBaseScore * nonOrderedMultiplier * qualityMultiplier) 
 		print("Served a soup without an associated recipe. Base: ", fallbackBaseScore, " Quality x", qualityMultiplier, " Non-ordered Soup x", nonOrderedMultiplier, " Total: +", finalScore)
 		

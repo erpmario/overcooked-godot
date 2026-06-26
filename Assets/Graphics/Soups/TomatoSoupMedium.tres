@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" format=3 uid="uid://buga4qd53n6gg"]
+
+[ext_resource type="Texture2D" uid="uid://dwg1oevnnvcd4" path="res://Assets/Graphics/Soups/_SoupsAtlas.tres" id="1_wsmgl"]
+
+[resource]
+atlas = ExtResource("1_wsmgl")
+region = Rect2(225, 0, 15, 15)

@@ -37,3 +37,21 @@ label_settings = SubResource("LabelSettings_jo1ms")
 layout_mode = 2
 text = "Time: 99:99"
 label_settings = SubResource("LabelSettings_psnte")
+
+[node name="OrdersLabel" type="Label" parent="MarginContainer/BoxContainer" unique_id=349557301]
+layout_mode = 2
+text = "Orders:"
+label_settings = SubResource("LabelSettings_jo1ms")
+visible = false
+
+[node name="ActiveOrdersContainer" type="HBoxContainer" parent="MarginContainer/BoxContainer" unique_id=349557302]
+layout_mode = 2
+
+[node name="QueueLabel" type="Label" parent="MarginContainer/BoxContainer" unique_id=349557303]
+layout_mode = 2
+text = "Next:"
+label_settings = SubResource("LabelSettings_jo1ms")
+visible = false
+
+[node name="QueueContainer" type="HBoxContainer" parent="MarginContainer/BoxContainer" unique_id=349557304]
+layout_mode = 2

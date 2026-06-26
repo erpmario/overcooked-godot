@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="DispenserConfig" format=3 uid="uid://bfispa34ty14u"]
+
+[ext_resource type="Resource" uid="uid://24e7iprdh1i3" path="res://Resources/Items/Plate.tres" id="1_xh1tl"]
+[ext_resource type="Script" uid="uid://bxeml2hehifrn" path="res://Scripts/Resources/DispenserConfig.gd" id="2_5wsq7"]
+
+[resource]
+script = ExtResource("2_5wsq7")
+itemData = ExtResource("1_xh1tl")
+qualityDistribution = Array[Vector2]([])
+metadata/_custom_type_script = "uid://bxeml2hehifrn"

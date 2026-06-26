@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="DispenserConfig" format=3 uid="uid://dp8ujnrsh4brq"]
+
+[ext_resource type="Script" uid="uid://bxeml2hehifrn" path="res://Scripts/Resources/DispenserConfig.gd" id="1_qbjql"]
+[ext_resource type="Resource" uid="uid://cr6q2cx2sg5h0" path="res://Resources/Items/Onion.tres" id="1_qt6we"]
+
+[resource]
+script = ExtResource("1_qbjql")
+itemData = ExtResource("1_qt6we")
+metadata/_custom_type_script = "uid://bxeml2hehifrn"
