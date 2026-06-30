@@ -4,8 +4,6 @@ var __config: PotConfig
 var __soup: Soup = null
 var __isCooked: bool = false
 var __isCooking: bool = false
-#var __capacity: int
-#var __cookTimeRequired: float
 var __cookTimeElapsed: float = 0.0
 
 

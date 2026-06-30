@@ -14,7 +14,7 @@ func dispense() -> Item:
 		item = Ingredient.new(itemData, __rollQuality())
 	# Assume Plate if not an Ingredient. Can add more options if needed.
 	else:
-		item = Plate.new()
+		item = Plate.new(itemData)
 	return item
 
 

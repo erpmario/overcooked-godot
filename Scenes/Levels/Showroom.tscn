@@ -99,5 +99,3 @@ config = ExtResource("20_zp9h1")
 [node name="TomatoDispenser15" parent="StationSpawners" unique_id=169557302 instance=ExtResource("16_alh3a")]
 position = Vector2(232.5, 112.5)
 config = ExtResource("20_zp9h1")
-
-[editable path="HUD"]

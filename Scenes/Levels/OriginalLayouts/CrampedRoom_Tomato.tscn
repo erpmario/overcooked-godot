@@ -1,0 +1,56 @@
+[gd_scene format=4 uid="uid://ons717s3snrv"]
+
+[ext_resource type="Script" uid="uid://b4samorkypq8y" path="res://Scripts/GameManager.gd" id="1_3dnw6"]
+[ext_resource type="PackedScene" uid="uid://hm5uqyso7i1b" path="res://Scenes/HUD.tscn" id="2_y2qbw"]
+[ext_resource type="PackedScene" uid="uid://bie7urp2lwsfl" path="res://Scenes/TileMap.tscn" id="3_xfmpq"]
+[ext_resource type="PackedScene" uid="uid://ps5gpx5sajwg" path="res://Scenes/Player.tscn" id="4_akhql"]
+[ext_resource type="Script" uid="uid://bro36xseucy5" path="res://Scripts/OrderManager.gd" id="5_hwqdg"]
+[ext_resource type="Script" uid="uid://w36sptivr4fo" path="res://Scripts/Resources/Recipe.gd" id="6_rvxol"]
+[ext_resource type="Resource" uid="uid://bs0wqa4d0iv1c" path="res://Resources/Recipes/OnionSoupLarge.tres" id="7_n5x3e"]
+[ext_resource type="Resource" uid="uid://binc25rwomu75" path="res://Resources/Recipes/OnionSoupMedium.tres" id="8_kxksr"]
+[ext_resource type="Resource" uid="uid://d2yh6uj20bkkd" path="res://Resources/Recipes/OnionSoupSmall.tres" id="9_xe7nu"]
+[ext_resource type="PackedScene" uid="uid://3w3krjbbv7xk" path="res://Scenes/StationSpawner.tscn" id="10_6yn6p"]
+[ext_resource type="Resource" uid="uid://uhuqveys5an0" path="res://Resources/Recipes/OnionSoupWithTomato.tres" id="10_xf5tm"]
+[ext_resource type="Resource" uid="uid://bbpdrxq0uoved" path="res://Resources/Recipes/TomatoSoupLarge.tres" id="11_r4fsj"]
+[ext_resource type="Resource" uid="uid://bl7vvj1md06ry" path="res://Resources/Tiles/StandardPot.tres" id="11_txinn"]
+[ext_resource type="Resource" uid="uid://desfuowlyb624" path="res://Resources/Recipes/TomatoSoupMedium.tres" id="12_7rnmu"]
+[ext_resource type="Resource" uid="uid://bfispa34ty14u" path="res://Resources/Tiles/PlateDispenser.tres" id="12_uj0ka"]
+[ext_resource type="Resource" uid="uid://c7na8a7cxc2k8" path="res://Resources/Recipes/TomatoSoupSmall.tres" id="13_bvo1q"]
+[ext_resource type="Resource" uid="uid://dp8ujnrsh4brq" path="res://Resources/Tiles/OnionDispenser.tres" id="13_m1l31"]
+[ext_resource type="Resource" uid="uid://ducbrsonmk0hj" path="res://Resources/Recipes/TomatoSoupWithOnion.tres" id="14_22y8g"]
+[ext_resource type="Resource" uid="uid://bct84pfaojtml" path="res://Resources/Tiles/TomatoDispenser.tres" id="14_y2qbw"]
+[ext_resource type="Resource" uid="uid://c2kp41ubbs6uc" path="res://Resources/Recipes/VegetableSoup.tres" id="15_ejsih"]
+
+[node name="CrampedRoom" type="Node2D" unique_id=362820415]
+script = ExtResource("1_3dnw6")
+
+[node name="HUD" parent="." unique_id=1145281534 instance=ExtResource("2_y2qbw")]
+
+[node name="TileMap" parent="." unique_id=1592662286 instance=ExtResource("3_xfmpq")]
+tile_map_data = PackedByteArray("AAAJAAQAAAAAAAAAAAAIAAQAAAAAAAAAAAALAAQAAAAAAAAAAAAMAAQAAAAAAAAAAAAMAAYAAAAAAAAAAAAMAAcAAAAAAAAAAAAKAAcAAAAAAAAAAAAIAAcAAAAAAAAAAAAIAAYAAAAAAAAAAAAJAAUAAAACAAAAAAAJAAYAAAACAAAAAAAKAAYAAAACAAAAAAALAAYAAAACAAAAAAALAAUAAAACAAAAAAAKAAUAAAACAAAAAAAKAAQAAAAEAAAAAAAIAAUAAAADAAAAAAAMAAUAAAAGAAAAAAAJAAcAAAABAAAAAAALAAcAAAAFAAAAAAA=")
+
+[node name="Player" parent="." unique_id=1895437262 instance=ExtResource("4_akhql")]
+position = Vector2(135, 90)
+
+[node name="OrderManager" type="Node" parent="." unique_id=1151963594]
+script = ExtResource("5_hwqdg")
+possibleRecipes = Array[ExtResource("6_rvxol")]([ExtResource("7_n5x3e"), ExtResource("8_kxksr"), ExtResource("9_xe7nu"), ExtResource("10_xf5tm"), ExtResource("11_r4fsj"), ExtResource("12_7rnmu"), ExtResource("13_bvo1q"), ExtResource("14_22y8g"), ExtResource("15_ejsih")])
+metadata/_custom_type_script = "uid://bro36xseucy5"
+
+[node name="StationSpawners" type="Node" parent="." unique_id=1496445039]
+
+[node name="Pot" parent="StationSpawners" unique_id=349557304 instance=ExtResource("10_6yn6p")]
+position = Vector2(157.5, 68)
+config = ExtResource("11_txinn")
+
+[node name="PlateDispenser" parent="StationSpawners" unique_id=149557301 instance=ExtResource("10_6yn6p")]
+position = Vector2(142, 112)
+config = ExtResource("12_uj0ka")
+
+[node name="OnionDispenser" parent="StationSpawners" unique_id=159557301 instance=ExtResource("10_6yn6p")]
+position = Vector2(128, 83)
+config = ExtResource("13_m1l31")
+
+[node name="TomatoDispenser" parent="StationSpawners" unique_id=159557302 instance=ExtResource("10_6yn6p")]
+position = Vector2(188, 83)
+config = ExtResource("14_y2qbw")

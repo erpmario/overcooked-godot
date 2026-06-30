@@ -3,8 +3,9 @@ class_name Plate extends Item
 var __soup: Soup = null
 
 
-func _init() -> void:
-	super(Globals.Items.PLATE)
+func _init(data: ItemData) -> void:
+	super(data.name)
+	__data = data
 
 
 func soup() -> Soup:

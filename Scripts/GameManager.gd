@@ -2,15 +2,13 @@ class_name GameManager extends Node2D
 
 signal gameOver
 
-@export var itemsAtlas: Texture2D = preload("res://Assets/Graphics/objects.png")
-@export var soupsAtlas: Texture2D = preload("res://Assets/Graphics/soups.png")
 @export var timeLimit: float = 300.0
 
 @onready var hud: HUD = $HUD
 @onready var orderManager: OrderManager = $OrderManager
 @onready var player: Player = $Player
 @onready var tileMap: TileMapLayer = $TileMap
-@onready var stationSpawners: Node = get_node_or_null("StationSpawners")
+@onready var stationSpawners: Node = $StationSpawners
 
 # The master grid mapping coordinates to tile objects
 var interactableGrid: Dictionary[Vector2i, InteractableTile] = {}
@@ -66,11 +64,10 @@ func _process(delta: float) -> void:
 func __initializeGrid() -> void:
 	# Build a lookup map of tile cell -> StationSpawner for config-driven stations.
 	var spawnerMap: Dictionary[Vector2i, StationSpawner] = {}
-	if has_node("StationSpawners"):
-		for child in $StationSpawners.get_children():
-			if child is StationSpawner:
-				var cell: Vector2i = tileMap.local_to_map(child.position)
-				spawnerMap[cell] = child
+	for child in stationSpawners.get_children():
+		if child is StationSpawner:
+			var cell: Vector2i = tileMap.local_to_map(child.position)
+			spawnerMap[cell] = child
 
 	var usedCells: Array[Vector2i] = tileMap.get_used_cells()
 	for cell in usedCells:
@@ -79,13 +76,13 @@ func __initializeGrid() -> void:
 			var stationType: String = tileData.get_custom_data(Globals.Stations.STATION_TYPE)
 			if stationType:
 				# Pass the spawner's config if one was placed on this tile.
-				var config: Resource = null
+				var config: StationConfig = null
 				if spawnerMap.has(cell):
 					config = spawnerMap[cell].config
 				__createStation(stationType, cell, config)
 
 
-func __createStation(stationType: StringName, coords: Vector2i, config: Resource = null) -> void:
+func __createStation(stationType: StringName, coords: Vector2i, config: StationConfig = null) -> void:
 	var newTile: InteractableTile = null
 
 	match stationType:
@@ -181,7 +178,7 @@ func _on_interactableTile_visualsChanged(tile: InteractableTile, coords: Vector2
 	if spriteGrid.has(coords) and spriteGrid[coords]:
 		spriteGrid[coords].queue_free()
 		spriteGrid.erase(coords)
-		
+
 	# Determine what needs to be drawn based on Tile class
 	if tile is Counter:
 		if tile.heldItem():
@@ -189,34 +186,25 @@ func _on_interactableTile_visualsChanged(tile: InteractableTile, coords: Vector2
 			spriteGrid[coords] = sprite
 	elif tile is Pot:
 		if tile.soup():
+			# Match the soup against recipes so we know what sprite to use.
+			__matchSoupToRecipe(tile.soup())
 			var sprite: Sprite2D = __spawnPotOverlaySprite(tile, coords)
 			spriteGrid[coords] = sprite
 	
 	
 func __spawnItemSprite(item: Item, coords: Vector2i) -> Sprite2D:
 	var sprite = Sprite2D.new()
-	sprite.texture = itemsAtlas
-	sprite.region_enabled = true
-	
-	if item is Ingredient:
-		match item.type():
-			Globals.Items.ONION:
-				sprite.region_rect = Rect2i(1 + 1 * 17, 1, 15, 15)
-			Globals.Items.TOMATO:
-				sprite.region_rect = Rect2i(1 + 14 * 17, 1, 15, 15)
-			_:
-				print("Invalid Ingredient type: ", item.type())
-		
-	elif item is Plate:
-		if item.soup():
-			# The different plated soups are in a different texture atlas.
-			sprite.texture = soupsAtlas
-			sprite.region_rect = __createSoupsAtlasRect(item.soup())
-			# Slide the window over to the plated soups.
-			sprite.region_rect.position.x += 9 * 15
-		else:
-			sprite.region_rect = Rect2i(1 + 0 * 17, 1, 15, 15)
-		
+	var itemData: ItemData = item.data()
+
+	if item is Plate and item.soup():
+		# Match the plated soup to its recipe for the sprite.
+		var soup: Soup = item.soup()
+		__matchSoupToRecipe(soup)
+		if soup.recipe:
+			sprite.texture = soup.recipe.sprite
+	else:
+		sprite.texture = itemData.sprite
+
 	# Center the sprite over the tile coordinates and add to scene tree
 	var tileCenter: Vector2 = tileMap.map_to_local(coords)
 	sprite.position = tileCenter
@@ -224,72 +212,28 @@ func __spawnItemSprite(item: Item, coords: Vector2i) -> Sprite2D:
 	return sprite
 	
 	
+func __matchSoupToRecipe(soup: Soup) -> void:
+	var soupIngredientData: Array[IngredientData] = soup.ingredientData()
+	for recipe in orderManager.possibleRecipes:
+		if recipe.matchesIngredients(soupIngredientData):
+			soup.recipe = recipe
+			return
+
+
 func __spawnPotOverlaySprite(pot: Pot, coords: Vector2i) -> Sprite2D:
 	var sprite: Sprite2D = Sprite2D.new()
-	sprite.texture = soupsAtlas
-	sprite.region_enabled = true
-	
-	sprite.region_rect = __createSoupsAtlasRect(pot.soup())
-	
-	# Slide the atlas window over to the uncooked textures if the soup isn't cooked.
-	if not pot.isCooked():
-		sprite.region_rect.position.x += 18 * 15
-		# The "uncooked 3 ingredient" textures are offset by 1 pixel in the y direction.
-		if pot.soup().numIngredients() == 3:
-			sprite.region_rect.position.y += 1
-	
+	var soup: Soup = pot.soup()
+
+	if soup.recipe:
+		if pot.isCooked() and soup.recipe.potCookedTexture:
+			sprite.texture = soup.recipe.potCookedTexture
+		elif soup.recipe.potUncookedTexture:
+			sprite.texture = soup.recipe.potUncookedTexture
+		else:
+			sprite.texture = soup.recipe.sprite
+
 	# Center the sprite over the tile coordinates and add to scene tree
 	var tileCenter: Vector2 = tileMap.map_to_local(coords)
 	sprite.position = tileCenter
 	add_child(sprite)
 	return sprite
-
-
-func __createSoupsAtlasRect(soup: Soup) -> Rect2i:
-	var rect: Rect2i
-	var ingredients: Array[Ingredient] = soup.ingredients()
-	var ingredientCounts: Dictionary[StringName, int] = {
-		Globals.Items.ONION: 0,
-		Globals.Items.TOMATO: 0
-	}
-	for ingredient in ingredients:
-		ingredientCounts[ingredient.type()] += 1
-	
-	# We know that at least one ingredient is present since the Soup object exists,
-	# so we can short-circuit a lot of these checks.
-	
-	# If the soup contains only Onions:
-	if ingredientCounts[Globals.Items.TOMATO] == 0:
-		# This is one of the few cases where the textures are laid out in sequence,
-		# so we can just use math to figure out the right start coordinate.
-		rect = Rect2i(
-			(-1 + ingredientCounts[Globals.Items.ONION]) * 15,
-			0, 15, 15
-		)
-	
-	# If the soup contains only Tomatoes:
-	elif ingredientCounts[Globals.Items.ONION] == 0:
-		# These textures are not laid out in any proper sequence,
-		# so we just have to hardcode.
-		match ingredientCounts[Globals.Items.TOMATO]:
-			1:
-				rect = Rect2i(3 * 15, 0, 15, 15)
-			2:
-				rect = Rect2i(6 * 15, 0, 15, 15)
-			3:
-				rect = Rect2i(8 * 15, 0, 15, 15)
-		
-	# If the soup contains a mixture of ingredients:
-	else:
-		# Again, these textures have no sequence, so we have to hardcode.
-		# 1 Onion, 1 Tomato
-		if ingredients.size() == 2:
-			rect = Rect2i(4 * 15, 0, 15, 15)
-		# 2 Onions, 1 Tomato
-		elif ingredientCounts[Globals.Items.ONION] == 2:
-			rect = Rect2i(5 * 15, 0, 15, 15)
-		# 1 Onion, 2 Tomatoes
-		else:
-			rect = Rect2i(7 * 15, 0, 15, 15)
-	
-	return rect

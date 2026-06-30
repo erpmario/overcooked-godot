@@ -1,6 +1,7 @@
 class_name Soup extends RefCounted
 
 var __ingredients: Array[Ingredient] = []
+var recipe: Recipe = null
 
 
 func ingredients() -> Array[Ingredient]:

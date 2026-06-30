@@ -3,12 +3,16 @@
 [ext_resource type="Script" uid="uid://dyp8hss26mbxe" path="res://Scripts/Resources/IngredientData.gd" id="1_oc3tk"]
 [ext_resource type="Script" uid="uid://w36sptivr4fo" path="res://Scripts/Resources/Recipe.gd" id="2_11r83"]
 [ext_resource type="Resource" uid="uid://cr6q2cx2sg5h0" path="res://Resources/Items/Onion.tres" id="2_nd2mh"]
-[ext_resource type="Texture2D" uid="uid://mcf3k8bnyqhr" path="res://Assets/Graphics/Soups/OnionSoupSmall.tres" id="4_nd2mh"]
+[ext_resource type="Texture2D" uid="uid://mcf3k8bnyqhr" path="res://Assets/Graphics/Soups/T_Plate_OnionSoupSmall.tres" id="4_nd2mh"]
+[ext_resource type="Texture2D" uid="uid://b25xso0bo81wb" path="res://Assets/Graphics/Pots/Cooked/T_Pot_Cooked_OnionSoupSmall.tres" id="5_nd2mh"]
+[ext_resource type="Texture2D" uid="uid://brr54gpy0oe5v" path="res://Assets/Graphics/Pots/Uncooked/T_Pot_Uncooked_OnionSoupSmall.tres" id="6_nd2mh"]
 
 [resource]
 script = ExtResource("2_11r83")
 recipeName = &"Small Onion Soup"
 sprite = ExtResource("4_nd2mh")
+potUncookedTexture = ExtResource("6_nd2mh")
+potCookedTexture = ExtResource("5_nd2mh")
 ingredients = Array[ExtResource("1_oc3tk")]([ExtResource("2_nd2mh")])
 baseScore = 2
 metadata/_custom_type_script = "uid://w36sptivr4fo"

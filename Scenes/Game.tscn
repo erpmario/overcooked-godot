@@ -55,4 +55,4 @@ config = ExtResource("19_xk4g2")
 position = Vector2(187.5, 82.5)
 config = ExtResource("20_zp9h1")
 
-[editable path="HUD"]
+[node name="MyMarker" type="Marker2D" parent="." unique_id=1492805168]

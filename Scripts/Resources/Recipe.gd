@@ -4,6 +4,8 @@ class_name Recipe extends Resource
 
 # Set to a plain Texture2D or an AtlasTexture resource.
 @export var sprite: Texture2D
+@export var potUncookedTexture: Texture2D
+@export var potCookedTexture: Texture2D
 
 @export var ingredients: Array[IngredientData] = []
 

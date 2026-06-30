@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="IngredientData" format=3 uid="uid://dlxufehqm7c1i"]
 
 [ext_resource type="Script" uid="uid://dyp8hss26mbxe" path="res://Scripts/Resources/IngredientData.gd" id="1_ehq4d"]
-[ext_resource type="Texture2D" uid="uid://dlgptdvioax3p" path="res://Assets/Graphics/stay.png" id="2_pr2a6"]
+[ext_resource type="Texture2D" uid="uid://bgn7avegg6rqo" path="res://Assets/Graphics/Items/T_Tomato.tres" id="2_ehq4d"]
 
 [resource]
 script = ExtResource("1_ehq4d")
 name = &"Tomato"
-sprite = ExtResource("2_pr2a6")
+sprite = ExtResource("2_ehq4d")
 metadata/_custom_type_script = "uid://dyp8hss26mbxe"
