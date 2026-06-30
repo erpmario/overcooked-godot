@@ -6,6 +6,8 @@ var __isCooked: bool = false
 var __isCooking: bool = false
 var __cookTimeElapsed: float = 0.0
 
+const FALLBACK_COOK_TIME: float = 5.0
+
 
 
 func _init(config: PotConfig) -> void:
@@ -25,7 +27,10 @@ func isCooking() -> bool:
 	
 	
 func cookingProgress() -> float:
-	return __cookTimeElapsed / __config.cookTimeRequired if __config.cookTimeRequired > 0.0 else 1.0
+	var requiredTime: float = FALLBACK_COOK_TIME
+	if __soup and __soup.recipe:
+		requiredTime = __soup.recipe.cookTime
+	return __cookTimeElapsed / requiredTime if requiredTime > 0.0 else 1.0
 
 
 func interact(player: Player) -> void:
@@ -71,7 +76,11 @@ func interact(player: Player) -> void:
 func tick(delta: float) -> void:
 	if __isCooking:
 		__cookTimeElapsed += delta
-		if __cookTimeElapsed >= __config.cookTimeRequired:
+		var requiredTime: float = FALLBACK_COOK_TIME
+		if __soup and __soup.recipe:
+			requiredTime = __soup.recipe.cookTime
+			
+		if __cookTimeElapsed >= requiredTime:
 			__isCooking = false
 			__isCooked = true
 			__cookTimeElapsed = 0.0

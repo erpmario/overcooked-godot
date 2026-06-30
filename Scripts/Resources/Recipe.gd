@@ -10,6 +10,7 @@ class_name Recipe extends Resource
 @export var ingredients: Array[IngredientData] = []
 
 @export var baseScore: int = 5
+@export var cookTime: float = 5.0
 @export var spawnWeight: float = 1.0
 
 
